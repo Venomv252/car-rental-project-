@@ -1,0 +1,31 @@
+{
+  "name": "car-rental-booking-system",
+  "version": "1.0.0",
+  "description": "A comprehensive car rental booking system with MySQL database, preventing double bookings and automating rental processes",
+  "main": "backend/app.js",
+  "scripts": {
+    "start": "cd backend && npm start",
+    "dev": "cd backend && npm run dev",
+    "install-backend": "cd backend && npm install",
+    "setup": "npm run install-backend"
+  },
+  "keywords": [
+    "car-rental",
+    "booking-system",
+    "mysql",
+    "nodejs",
+    "express",
+    "calendar",
+    "responsive-design"
+  ],
+  "author": "Car Rental System Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/car-rental-booking-system.git"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  }
+}

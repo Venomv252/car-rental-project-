@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Car Rental System</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+    <header>
+        <h1>🚗 Car Rental System</h1>
+        <nav>
+            <a href="#search">Search Cars</a>
+            <a href="#bookings">My Bookings</a>
+            <a href="#returns">Returns</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Search Section -->
+        <section id="search">
+            <h2>Find Your Perfect Car</h2>
+            <div class="search-form">
+                <div class="form-group">
+                    <label for="pickup-date">Pickup Date (dd/mm/yyyy):</label>
+                    <div class="date-input-wrapper">
+                        <input type="text" id="pickup-date" placeholder="dd/mm/yyyy" required pattern="\d{2}/\d{2}/\d{4}" maxlength="10">
+                        <span class="calendar-icon" onclick="openCalendar('pickup-date')">📅</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="return-date">Return Date (dd/mm/yyyy):</label>
+                    <div class="date-input-wrapper">
+                        <input type="text" id="return-date" placeholder="dd/mm/yyyy" required pattern="\d{2}/\d{2}/\d{4}" maxlength="10">
+                        <span class="calendar-icon" onclick="openCalendar('return-date')">📅</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="car-type">Car Type:</label>
+                    <select id="car-type">
+                        <option value="">All Types</option>
+                        <option value="economy">Economy</option>
+                        <option value="compact">Compact</option>
+                        <option value="suv">SUV</option>
+                        <option value="luxury">Luxury</option>
+                    </select>
+                </div>
+                <button onclick="searchCars()">Search Available Cars</button>
+            </div>
+
+            <div id="car-list" class="car-grid">
+                <!-- Cars will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Booking Modal -->
+        <div id="booking-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeBookingModal()">&times;</span>
+                <h2>Book Your Car</h2>
+                <form id="booking-form">
+                    <div id="selected-car-info"></div>
+                    <div class="form-group">
+                        <label for="customer-name">Full Name:</label>
+                        <input type="text" id="customer-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-email">Email:</label>
+                        <input type="email" id="customer-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-phone">Phone:</label>
+                        <input type="tel" id="customer-phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="license-number">License Number:</label>
+                        <input type="text" id="license-number" required>
+                    </div>
+                    <div class="booking-summary">
+                        <h3>Booking Summary</h3>
+                        <div id="booking-details"></div>
+                    </div>
+                    <button type="submit">Confirm Booking</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- My Bookings Section -->
+        <section id="bookings" style="display: none;">
+            <h2>My Bookings</h2>
+            <div class="search-booking">
+                <input type="email" id="search-email" placeholder="Enter your email to view bookings">
+                <button onclick="loadBookings()">Load Bookings</button>
+            </div>
+            <div id="email-error" class="error-message" style="display: none;"></div>
+            <div id="booking-list">
+                <!-- Bookings will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Returns Section -->
+        <section id="returns" style="display: none;">
+            <h2>Return Vehicle</h2>
+            <div class="return-form">
+                <div class="form-group">
+                    <label for="booking-id">Booking ID:</label>
+                    <input type="text" id="booking-id" placeholder="Enter your booking ID">
+                </div>
+                <div class="form-group">
+                    <label for="return-condition">Vehicle Condition:</label>
+                    <select id="return-condition">
+                        <option value="excellent">Excellent</option>
+                        <option value="good">Good</option>
+                        <option value="fair">Fair</option>
+                        <option value="poor">Poor</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="return-notes">Additional Notes:</label>
+                    <textarea id="return-notes" placeholder="Any damages or issues?"></textarea>
+                </div>
+                <button onclick="processReturn()">Process Return</button>
+            </div>
+            <div id="return-result"></div>
+        </section>
+
+        <!-- Calendar Modal -->
+        <div id="calendar-modal" class="modal">
+            <div class="modal-content calendar-modal-content">
+                <span class="close" onclick="closeCalendar()">&times;</span>
+                <h3 id="calendar-title">Select Date</h3>
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button type="button" class="nav-btn" onclick="previousMonth()">&lt;</button>
+                        <span id="calendar-month-year"></span>
+                        <button type="button" class="nav-btn" onclick="nextMonth()">&gt;</button>
+                    </div>
+                    <div class="calendar-weekdays">
+                        <div>Sun</div>
+                        <div>Mon</div>
+                        <div>Tue</div>
+                        <div>Wed</div>
+                        <div>Thu</div>
+                        <div>Fri</div>
+                        <div>Sat</div>
+                    </div>
+                    <div id="calendar-days" class="calendar-days">
+                        <!-- Calendar days will be generated here -->
+                    </div>
+                </div>
+                <div class="calendar-footer">
+                    <button type="button" onclick="selectToday()">Today</button>
+                    <button type="button" onclick="closeCalendar()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Car Rental System. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
